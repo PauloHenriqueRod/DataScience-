@@ -1,0 +1,14 @@
+pandas:
+    https://pandas.pydata.org/docs/user_guide/index.html#user-guide
+numpy:
+    https://numpy.org/doc/
+CSV:
+    https://docs.python.org/pt-br/3.10/library/csv.html
+pypi:
+    https://pypi.org
+statistics:
+    https://docs.python.org/pt-br/3.10/library/statistics.html
+formato unicode:
+    https://docs.python.org/3/howto/pyporting.html
+    https://wiki.python.org.br/TudoSobrePythoneUnicode
+    https://wiki.python.org.br/PythonEUnicodePorLucianoRamalho
