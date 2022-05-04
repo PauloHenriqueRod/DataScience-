@@ -67,3 +67,5 @@ for rec in recset:
 
 # Fecha a conexão
 con.close()
+
+
