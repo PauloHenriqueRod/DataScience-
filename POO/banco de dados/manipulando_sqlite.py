@@ -2,6 +2,7 @@ import sqlite3
 import datetime
 import random
 import time
+import matplotlib.pyplot as plt
 
 # Criando uma conexão
 con = sqlite3.connect('treino.db')
@@ -63,11 +64,42 @@ def leitura_coluna():
         print(linha[3])
 
 
-todos_dados()
-print('-='*30)
-leitura_especifica()
-print('-='*30)
-leitura_coluna()
+# UPDATE:
+def atualiza_dados():
+    c.execute("UPDATE produtos SET valor = valor - 1000 WHERE VALOR > 6000")
+    con.commit()
 
+
+# DELETE:
+def remove_dados():
+    c.execute("DELETE FROM produtos WHERE valor < 3000")
+    con.commit()
+
+
+# Gerar gráficos com dados de banco de dados:
+def gera_grafico():
+    c.execute("SELECT id, valor FROM produtos")
+    ids = []
+    valor = []
+    for linha in c.fetchall():
+        ids += [linha[0]]
+        valor.append(linha[1])
+
+    plt.bar(ids, valor)
+    plt.show()
+
+# todos_dados()
+# print('-='*30)
+# leitura_especifica()
+# print('-='*30)
+# leitura_coluna()
+# print('-=' * 30)
+# atualiza_dados()
+# todos_dados()
+# print('-='*30)
+# remove_dados()
+# todos_dados()
+
+gera_grafico()
 c.close()
 con.close()
