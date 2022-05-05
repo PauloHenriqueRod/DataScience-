@@ -38,6 +38,36 @@ def data_insert_var():
     con.commit()
 
 
-for i in range(10):
-    data_insert_var()
-    time.sleep(1)
+# for i in range(10):
+#    data_insert_var()
+#    time.sleep(1)
+
+# Leitura de dados:
+def todos_dados():
+    c.execute("SELECT * FROM PRODUTOS")
+    for linha in c.fetchall():
+        print(linha)
+
+
+# Leitura de dados específicos:
+def leitura_especifica():
+    c.execute("SELECT * FROM PRODUTOS WHERE valor > 5000")
+    for linha in c.fetchall():
+        print(linha)
+
+
+# Leitura de colunas específicas:
+def leitura_coluna():
+    c.execute("SELECT * FROM PRODUTOS")
+    for linha in c.fetchall():
+        print(linha[3])
+
+
+todos_dados()
+print('-='*30)
+leitura_especifica()
+print('-='*30)
+leitura_coluna()
+
+c.close()
+con.close()
