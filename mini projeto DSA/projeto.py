@@ -37,3 +37,17 @@ for tabela in tableas:
     print(resultado)
     print('-'*100)
     print('\n')
+
+# QUAIS SÃO AS CATEGORIAS DE FILME MAIS ASSISTIDAS:
+print('-'*100)
+print('MOSTRANDO QUAIS SÃO AS CATEGORIAS DE FILMES MAIS ASSISTIDAS')
+print('-'*100)
+# Criando consulta SQL:
+consulta1 = 'SELECT type, COUNT(*) AS COUNT FROM titles GROUP BY type'
+# Extraindo resultado:
+resultado1 = pd.read_sql_query(consulta1, con)
+# print(resultado1)
+
+# Calculando percentual:
+resultado1['percentual'] = (resultado1['COUNT']/resultado1['COUNT'].sum())*100
+print(resultado1)
