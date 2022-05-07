@@ -1,3 +1,5 @@
+# MINI-PROJETO do curso python fundamento para ciência de dados - DATA SCIENCE ACADEMY
+
 import re
 import time
 import sqlite3
