@@ -81,14 +81,12 @@ print(resultado1)
 # Ajuste das labels:
 labels=[str(resultado1['type'][i])+' '+'['+str(round(resultado1['percentual'][i], 2))+'%'+']' for i in resultado1.index]
 
-# Mapa de cores:
-cs = cm.Set3(np.arange(100))
 
 # Criando figura:
 f = plt.figure()
 
 # PiePlot:
-plt.pie(resultado1['COUNT'], labeldistance=1, radius=3, colors=cs, wedgeprops=dict(width=0.8))
-plt.legend(labels=labels, loc= 'center', prop={'size': 12})
-plt.title("Distribuição de Títulos", loc='Center', fontdict={'fontsize': 20, 'fontweight': 20})
+plt.pie(resultado1['COUNT'], labeldistance=1, radius=1.5, wedgeprops=dict(width=0.4))
+plt.legend(labels=labels, loc = 'center', prop={'size': 8})
+plt.title("Distribuição de Títulos", loc='Center', fontdict={'fontsize': 10, 'fontweight': 10})
 plt.show()
