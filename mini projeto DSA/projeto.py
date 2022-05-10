@@ -3,7 +3,6 @@
 import re
 import time
 import sqlite3
-
 import pandas.core.frame
 import pycountry
 import numpy as np
@@ -44,8 +43,10 @@ for tabela in tableas:
 print('-'*100)
 print('MOSTRANDO QUAIS SÃO AS CATEGORIAS DE FILMES MAIS ASSISTIDAS')
 print('-'*100)
+
 # Criando consulta SQL:
 consulta1 = 'SELECT type, COUNT(*) AS COUNT FROM titles GROUP BY type'
+
 # Extraindo resultado:
 resultado1 = pd.read_sql_query(consulta1, con)
 # print(resultado1)
@@ -53,3 +54,41 @@ resultado1 = pd.read_sql_query(consulta1, con)
 # Calculando percentual:
 resultado1['percentual'] = (resultado1['COUNT']/resultado1['COUNT'].sum())*100
 print(resultado1)
+print('-'*100)
+
+# Criando um gráfico com 3 categorias principais + categoria que abrange todas as outras:
+others = {}
+
+# Craição da categoria 'others'
+others['COUNT'] = resultado1[resultado1['percentual'] < 5]['COUNT'].sum()
+
+# Gravando percentual:
+others['percentual'] = resultado1[resultado1['percentual'] < 5]['percentual'].sum()
+
+# Ajustando o nome:
+others['type'] = 'others'
+# print(others)
+# Filtrando o dataframe de resultados:
+resultado1 = resultado1[resultado1['percentual']>5]
+
+# Adicionando a categoria 'others'
+resultado1 = resultado1.append(others, ignore_index=True)
+
+# Ordenando resultado:
+resultado1 = resultado1.sort_values(by='COUNT', ascending=False)
+print(resultado1)
+
+# Ajuste das labels:
+labels=[str(resultado1['type'][i])+' '+'['+str(round(resultado1['percentual'][i], 2))+'%'+']' for i in resultado1.index]
+
+# Mapa de cores:
+cs = cm.Set3(np.arange(100))
+
+# Criando figura:
+f = plt.figure()
+
+# PiePlot:
+plt.pie(resultado1['COUNT'], labeldistance=1, radius=3, colors=cs, wedgeprops=dict(width=0.8))
+plt.legend(labels=labels, loc= 'center', prop={'size': 12})
+plt.title("Distribuição de Títulos", loc='Center', fontdict={'fontsize': 20, 'fontweight': 20})
+plt.show()
