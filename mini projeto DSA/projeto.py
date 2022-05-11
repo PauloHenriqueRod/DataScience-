@@ -38,8 +38,9 @@ for tabela in tableas:
     print(resultado)
     print('-'*100)
     print('\n')
-
-# QUAIS SÃO AS CATEGORIAS DE FILME MAIS ASSISTIDAS:
+print('#'*50)
+print()
+# --------------------------QUAIS SÃO AS CATEGORIAS DE FILME MAIS ASSISTIDAS:-------------------------------------------
 print('-'*100)
 print('MOSTRANDO QUAIS SÃO AS CATEGORIAS DE FILMES MAIS ASSISTIDAS')
 print('-'*100)
@@ -90,3 +91,25 @@ plt.pie(resultado1['COUNT'], labeldistance=1, radius=1.5, wedgeprops=dict(width=
 plt.legend(labels=labels, loc = 'center', prop={'size': 8})
 plt.title("Distribuição de Títulos", loc='Center', fontdict={'fontsize': 10, 'fontweight': 10})
 plt.show()
+print('#'*50)
+print()
+# --------------------------------QUAIS AS CATEGORIAS COM MAIS FILMES--------------------------------------------------
+
+# Cria a consulta SQL:
+consulta2 = "SELECT genres, COUNT(*) FROM titles WHERE type = 'movie' GROUP BY genres"
+
+# RESULTADO 2:
+resultado2 = pd.read_sql_query(consulta2, con)
+
+# Vizualiza o resultado:
+print(resultado2)
+
+# Convertendo as strings para minúsculo, para facilitar a leitura:
+resultado2['genres'] = resultado2['genres'].str.lower().values
+
+# Removendo valroes ausentes:
+temp = resultado2['genres'].dropna()
+
+# Criando um vetor usando expressão regular para filtrar as strings:
+padrao = r'(?u)\\b[\\w-]+\\b'
+vetor = CountVectorizer(token_pattern=padrao, analyzer='word').fit(temp)
