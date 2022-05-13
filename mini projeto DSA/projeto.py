@@ -99,17 +99,18 @@ print()
 consulta2 = "SELECT genres, COUNT(*) FROM titles WHERE type = 'movie' GROUP BY genres"
 
 # RESULTADO 2:
-resultado2 = pd.read_sql_query(consulta2, con)
-
-# Vizualiza o resultado:
-print(resultado2)
-
-# Convertendo as strings para minúsculo, para facilitar a leitura:
-resultado2['genres'] = resultado2['genres'].str.lower().values
-
-# Removendo valroes ausentes:
-temp = resultado2['genres'].dropna()
-
-# Criando um vetor usando expressão regular para filtrar as strings:
-padrao = r'(?u)\\b[\\w-]+\\b'
-vetor = CountVectorizer(token_pattern=padrao, analyzer='word').fit(temp)
+#  --------------------------------------TENTAR CONSERTAR DEPOIS---------------------------------------------------
+# resultado2 = pd.read_sql_query(consulta2, con)
+#
+# # Vizualiza o resultado:
+# print(resultado2)
+#
+# # Convertendo as strings para minúsculo, para facilitar a leitura:
+# resultado2['genres'] = resultado2['genres'].str.lower().values
+#
+# # Removendo valroes ausentes:
+# temp = resultado2['genres'].dropna()
+#
+# # Criando um vetor usando expressão regular para filtrar as strings:
+# padrao = r'(?u)\\b[\\w-]+\\b'
+# vetor = CountVectorizer(token_pattern=padrao, analyzer='word').fit(temp)
