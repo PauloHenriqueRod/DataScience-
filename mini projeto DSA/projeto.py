@@ -113,3 +113,26 @@ temp = resultado2['genres'].dropna()
 # Criando um vetor usando expressão regular para filtrar as strings:
 padrao = r'(?u)\b\w\w+\b'
 vetor = CountVectorizer(token_pattern=padrao, analyzer='word').fit(temp)
+
+# Aplicando vetorização ao dataset sem valroes 'na':
+bag_generos = vetor.transform(temp)
+
+# Retornando gêneros únicos:
+generos_unicos = vetor.get_feature_names()
+
+# Criando o dataframe de gêneros:
+generos = pd.DataFrame(bag_generos.todense(), columns=generos_unicos, index=temp.index)
+
+# Vizualizando:
+generos.info()
+
+# Calculando o percentual:
+generos_percentual = 100 * pd.Series(generos.sum()).sort_values(ascending=False)/generos.shape[0]
+
+# Plot:
+plt.figure(figsize=(9, 5))
+sns.barplot(x=generos_percentual.values, y=generos_percentual.index, orient='h', palette='terrain')
+plt.ylabel('\nGênero')
+plt.xlabel('\nPercentual de filmes (%)')
+plt.title('\nNúmero (Percentual) de títulos por gênero')
+plt.show()
