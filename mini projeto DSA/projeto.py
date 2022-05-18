@@ -136,3 +136,33 @@ plt.ylabel('\nGênero')
 plt.xlabel('\nPercentual de filmes (%)')
 plt.title('\nNúmero (Percentual) de títulos por gênero')
 plt.show()
+print('#'*100)
+
+# ------------------------------------MEDIANA DE AVALIAÇÃO DOS FILMES POR GÊNEROS-------------------------------------
+print('#'*100)
+# Consulta sql:
+consulta3 = '''
+SELECT rating, genres FROM
+ratings JOIN titles ON ratings.title_id=titles.title_id
+WHERE premiered<=2022 AND type = 'movie'
+'''
+
+# Resultado:
+resultado3 = pd.read_sql_query(consulta3, con)
+
+
+# Retornando os gêneros:
+def retorna_generos(df):
+    df['genres'] = df['genres'].str.lower().values
+    temp = df['genres'].dropna()
+    vetor = CountVectorizer(token_pattern=padrao, analyzer='word').fit(temp)
+    genero_unico = vetor.get_feature_names()
+    genero_unico = [genre for genre in genero_unico if len(genre)>1]
+    return genero_unico
+
+# Aplicando a função:
+gen_unic = retorna_generos(resultado3)
+
+# Criando listas vazias:
+genero_count = []
+
