@@ -165,4 +165,24 @@ gen_unic = retorna_generos(resultado3)
 
 # Criando listas vazias:
 genero_count = []
+generos_rating = []
 
+# Loop
+for itens in generos_unicos:
+    # Retorna a contagem de filmes por gênero:
+    consulta = f'SELECT COUNT(rating) FROM ratings JOIN titles ON ratings.title_id=titles.title_id ' \
+               f'WHERE genres LIKE \\%{itens}%\\ AND type=\'movie\''
+    resultado = pd.read_sql_query(consulta, con)
+    genero_count.append(resultado.values[0][0])
+
+    # Retorna a avaliaçãoe filmes por gênero:
+    consulta = 'SELECT rating FROM ratings JOIN titles ON ratings.title_id=titles.title_id ' \
+               f'WHERE genres LIKE \\%{itens}%\\ and type = \'movie\''
+    resultado = pd.read_sql_query(consulta, con)
+    generos_rating.append(np.median(resultado['rating']))
+
+# Preparando o dataframe inicial:
+df_generos_ratings = pd.DataFrame()
+df_generos_ratings['genres'] = generos_unicos
+df_generos_ratings['count'] = genero_count
+df_generos_ratings['rating'] = df_generos_ratings
