@@ -171,13 +171,13 @@ generos_rating = []
 for itens in generos_unicos:
     # Retorna a contagem de filmes por gênero:
     consulta = f'SELECT COUNT(rating) FROM ratings JOIN titles ON ratings.title_id=titles.title_id ' \
-               f'WHERE genres LIKE \\%{itens}%\\ AND type=\'movie\''
+               f'WHERE genres LIKE {itens} AND type=\'movie\''
     resultado = pd.read_sql_query(consulta, con)
     genero_count.append(resultado.values[0][0])
 
     # Retorna a avaliaçãoe filmes por gênero:
     consulta = 'SELECT rating FROM ratings JOIN titles ON ratings.title_id=titles.title_id ' \
-               f'WHERE genres LIKE \\%{itens}%\\ and type = \'movie\''
+               f'WHERE genres LIKE {itens} and type = \'movie\''
     resultado = pd.read_sql_query(consulta, con)
     generos_rating.append(np.median(resultado['rating']))
 
